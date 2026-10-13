@@ -1,111 +1,471 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jeyyy's Diner</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Georgia, serif; background: #1a1a1a; color: #f5f0e8; }
-    header {
-      background: #b3122e;
-      text-align: center;
-      padding: 60px 20px;
-    }
-    header h1 { font-size: 3em; letter-spacing: 2px; }
-    header p { font-size: 1.2em; margin-top: 10px; font-style: italic; }
-    nav {
-      background: #8c0e23;
-      text-align: center;
-      padding: 15px;
-    }
-    nav a { color: #f5f0e8; text-decoration: none; margin: 0 20px; font-size: 1.1em; }
-    nav a:hover { color: #ffd166; }
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-      background: #242424;
-    }
-    .hero h2 { font-size: 2.5em; margin-bottom: 15px; color: #ffd166; }
-    .hero p { font-size: 1.2em; max-width: 600px; margin: 0 auto 30px; }
-    .btn {
-      display: inline-block;
-      background: #b3122e;
-      color: #fff;
-      padding: 14px 35px;
-      text-decoration: none;
-      font-size: 1.1em;
-      border-radius: 5px;
-    }
-    .btn:hover { background: #ffd166; color: #1a1a1a; }
-    section { padding: 60px 20px; max-width: 900px; margin: 0 auto; }
-    section h2 { color: #ffd166; font-size: 2em; margin-bottom: 25px; text-align: center; }
-    .menu-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 15px 0;
-      border-bottom: 1px dashed #555;
-      font-size: 1.1em;
-    }
-    .menu-item span:last-child { color: #ffd166; }
-    footer {
-      background: #b3122e;
-      text-align: center;
-      padding: 25px;
-      margin-top: 40px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171717">
+<meta name="description" content="Jeyyy's Diner — a restaurant website demo with food, offers, and easy ordering.">
+<title>Jeyyy's Diner | Good Food. Good Mood.</title>
+<style>
+:root{--bg:#171717;--panel:#222;--panel2:#2b2927;--red:#b3122e;--red2:#8c0e23;--gold:#ffd166;--cream:#f5f0e8;--muted:#c6bdb2;--line:#51443a;--green:#7bd89a}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--cream);line-height:1.55}
+button,input,select,textarea{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+a{color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+img{max-width:100%;display:block}
+.container{width:min(1160px,92%);margin:auto}
+.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:2px;font-size:.78rem;font-weight:bold}
+header{background:var(--red);padding:23px 0;text-align:center}
+.brand{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:1px;line-height:1.2}
+header p{font-style:italic;margin-top:5px}
+nav{position:sticky;top:0;z-index:20;background:rgba(30,15,18,.97);border-bottom:1px solid #4a1b25;backdrop-filter:blur(12px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:62px}
+.navlinks{display:flex;gap:23px;align-items:center;flex-wrap:wrap}
+.navlinks a{text-decoration:none;color:var(--cream);font-size:.98rem}
+.navlinks a:hover{color:var(--gold)}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.icon-btn,.menu-toggle{background:#302328;border:1px solid #68404a;color:var(--cream);padding:9px 12px;border-radius:8px}
+.cart-count{background:var(--gold);color:#171717;border-radius:50%;font-size:.75rem;padding:1px 6px;font-weight:bold}
+.menu-toggle{display:none}
+.hero{min-height:480px;display:flex;align-items:center;background:linear-gradient(90deg,rgba(13,13,13,.95),rgba(13,13,13,.74) 50%,rgba(13,13,13,.16)),url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1800&q=85') center/cover}
+.hero-content{padding:76px 0;max-width:620px}
+.hero h2{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.06;margin:13px 0 20px}
+.hero h2 span{color:var(--gold)}
+.hero p{font-size:1.1rem;max-width:530px;color:#eee1d5;margin-bottom:25px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:8px;padding:12px 19px;text-decoration:none;font-weight:bold;transition:transform .2s,background .2s;color:#fff;background:var(--red)}
+.btn:hover{transform:translateY(-2px);background:#d01b3b}
+.btn.gold{background:var(--gold);color:#20170b}
+.btn.gold:hover{background:#ffe09a}
+.btn.outline{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+.btn.small{padding:8px 12px;font-size:.9rem}
+section{padding:64px 0}
+.section-head{text-align:center;margin:0 auto 28px;max-width:700px}
+.section-head h2{font-size:clamp(1.8rem,4vw,2.6rem);color:var(--gold);margin:6px 0 8px}
+.section-head p{color:var(--muted)}
+.feature-strip{background:#211b1b;border-block:1px solid #382c2a}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:20px 0;text-align:center}
+.feature-grid strong{display:block;color:var(--gold)}
+.feature-grid span{font-size:.9rem;color:var(--muted)}
+.toolbar{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:24px}
+.search-wrap{flex:1;min-width:210px;max-width:410px}
+input,select,textarea{width:100%;background:#171717;color:var(--cream);border:1px solid #625248;border-radius:8px;padding:11px 12px}
+input::placeholder,textarea::placeholder{color:#a99e94}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filter{background:var(--panel);border:1px solid var(--line);color:var(--cream);border-radius:30px;padding:8px 14px}
+.filter.active,.filter:hover{background:var(--gold);border-color:var(--gold);color:#1b1712}
+.menu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.food-card{background:var(--panel);border:1px solid #493b32;border-radius:13px;overflow:hidden;transition:transform .22s,border-color .22s;display:flex;flex-direction:column}
+.food-card:hover{transform:translateY(-5px);border-color:var(--gold)}
+.food-img-wrap{position:relative;overflow:hidden}
+.food-card img{width:100%;height:205px;object-fit:cover;transition:transform .4s}
+.food-card:hover img{transform:scale(1.045)}
+.tag{position:absolute;left:12px;top:12px;background:var(--red);color:white;border-radius:5px;padding:4px 8px;font-size:.75rem;font-weight:bold}
+.food-info{padding:16px;display:flex;flex-direction:column;flex:1}
+.food-info h3{font-size:1.12rem;margin-bottom:5px}
+.food-info p{color:var(--muted);font-size:.9rem;flex:1;margin-bottom:13px}
+.prices{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:14px}
+.prices strong{color:var(--gold);font-size:1.05rem}
+.prices span{color:#d5c7b9;font-size:.9rem}
+.card-bottom{display:flex;gap:8px;align-items:center}
+.card-bottom .btn{flex:1}
+.empty-state{grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)}
+.promo{background:linear-gradient(120deg,#8c0e23,#3a1118);border:1px solid #a33a4c;border-radius:16px;padding:30px;display:flex;justify-content:space-between;align-items:center;gap:25px}
+.promo h2{font-size:clamp(1.5rem,4vw,2.3rem);color:var(--gold);margin:5px 0}
+.promo p{color:#f1dfdc}
+.gallery-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;grid-template-rows:170px 170px;gap:12px}
+.gallery-grid img{width:100%;height:100%;object-fit:cover;border-radius:10px;border:1px solid #46372e}
+.gallery-grid img:first-child{grid-row:span 2}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}
+.about-grid img{width:100%;height:330px;object-fit:cover;border-radius:14px}
+.about-grid p{color:var(--muted);margin:12px 0}
+.pill-list{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.pill{border:1px solid var(--line);padding:7px 10px;border-radius:20px;color:var(--gold);font-size:.88rem}
+.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.review{background:var(--panel);padding:20px;border:1px solid var(--line);border-radius:12px}
+.stars{color:var(--gold);letter-spacing:2px}
+.review p{color:var(--muted);margin:9px 0}
+.review small{color:#e2c6a7}
+.demo-note{font-size:.8rem;color:#c8b8a8;margin-top:12px}
+.faq-list{max-width:820px;margin:auto;display:grid;gap:10px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:14px 16px}
+summary{cursor:pointer;font-weight:bold;color:var(--gold)}
+details p{color:var(--muted);margin-top:10px}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.contact-card{background:var(--panel);padding:24px;border-radius:12px;border:1px solid var(--line)}
+.contact-card h3{color:var(--gold);margin-bottom:10px}
+.contact-card p{color:var(--muted);margin:7px 0}
+.contact-card a{color:var(--gold);overflow-wrap:anywhere}
+footer{background:#100e0e;border-top:3px solid var(--red);padding:28px 0;text-align:center;color:var(--muted)}
+footer strong{color:var(--gold)}
+footer .developer{margin-top:10px}
+footer a{color:var(--gold)}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-backdrop.open{display:flex}
+.modal{background:#211d1b;border:1px solid #665042;border-radius:14px;width:min(650px,100%);max-height:90vh;overflow:auto;padding:23px}
+.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:17px}
+.modal-head h2{color:var(--gold)}
+.close-btn{background:transparent;color:var(--cream);border:1px solid var(--line);border-radius:7px;padding:5px 10px}
+.cart-list{display:grid;gap:12px}
+.cart-row{display:grid;grid-template-columns:1fr auto;gap:12px;border-bottom:1px solid var(--line);padding:10px 0}
+.cart-row p{color:var(--muted);font-size:.88rem}
+.qty{display:flex;align-items:center;gap:7px;margin-top:7px}
+.qty button{width:28px;height:28px;background:#39302c;color:var(--cream);border:1px solid #685248;border-radius:6px}
+.cart-row .remove{background:none;border:0;color:#ff8d9c;text-decoration:underline;font-size:.82rem;margin-left:8px}
+.total-line{display:flex;justify-content:space-between;gap:12px;margin-top:13px;padding-top:13px;border-top:1px solid var(--line)}
+.total-line strong{color:var(--gold)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:grid;gap:5px;margin-bottom:12px}
+.field.full{grid-column:1/-1}
+.field label{font-size:.9rem;color:#e5d4c5}
+.hint{color:var(--muted);font-size:.82rem}
+.notice{background:#30251e;border-left:3px solid var(--gold);padding:11px 13px;color:#e6d7c8;border-radius:5px;font-size:.9rem;margin:12px 0}
+.status-list{display:grid;gap:10px}
+.status-item{background:var(--panel);border:1px solid var(--line);padding:12px;border-radius:8px}
+.status-item strong{color:var(--gold)}
+.admin-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:17px}
+.admin-tabs button{background:var(--panel);border:1px solid var(--line);color:var(--cream);padding:8px 11px;border-radius:7px}
+.admin-tabs button.active{background:var(--gold);color:#171717}
+.admin-item{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center}
+.admin-item p{font-size:.85rem;color:var(--muted)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#f5f0e8;color:#171717;padding:11px 17px;border-radius:8px;z-index:100;opacity:0;pointer-events:none;transition:.25s;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.hidden{display:none!important}
+@media(max-width:850px){.menu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.review-grid{grid-template-columns:1fr}.gallery-grid{grid-template-rows:140px 140px}.food-card img{height:185px}}
+@media(max-width:650px){.menu-toggle{display:inline-block}.nav-inner{flex-wrap:wrap;padding:10px 0}.navlinks{display:none;order:3;width:100%;padding:12px 0;flex-direction:column;align-items:flex-start;gap:13px}.navlinks.open{display:flex}.nav-actions{margin-left:auto}.hero{min-height:440px;background-position:58% center}.hero-content{padding:58px 0}.feature-grid{grid-template-columns:1fr;gap:13px}.menu-grid{grid-template-columns:1fr}.food-card img{height:235px}.promo{align-items:flex-start;flex-direction:column}.gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:150px 150px 150px}.gallery-grid img:first-child{grid-row:auto;grid-column:span 2}.about-grid,.contact-grid{grid-template-columns:1fr}.about-grid img{height:250px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.modal{padding:17px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
 </head>
 <body>
-
-  <header>
-    <h1>🍔 Jeyyy's Diner</h1>
+<header id="home">
+  <div class="container">
+    <div class="brand">🍔 Jeyyy's Diner</div>
     <p>Good food. Good mood. Since day one.</p>
-  </header>
-
-  <nav>
-    <a href="#menu">Menu</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <div class="hero">
-    <h2>Welcome to Jeyyy's Diner!</h2>
-    <p>Home of the juiciest burgers, crispy fries, and the best milkshakes in town. Pull up a seat — you're family here.</p>
-    <a href="#menu" class="btn">See Our Menu</a>
   </div>
+</header>
+<nav>
+  <div class="container nav-inner">
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
+    <div class="navlinks" id="navlinks">
+      <a href="#home">Home</a><a href="#menu">Menu</a><a href="#gallery">Gallery</a><a href="#about">About</a><a href="#reviews">Reviews</a><a href="#faq">FAQs</a><a href="#contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" id="accountBtn">👤 Demo account</button>
+      <button class="btn small" id="cartBtn">🛒 Cart <span class="cart-count" id="cartCount">0</span></button>
+    </div>
+  </div>
+</nav>
 
-  <section id="menu">
-    <h2>Our Menu</h2>
-    <div class="menu-item"><span>Jeyyy's Classic Burger</span><span>$8.99</span></div>
-    <div class="menu-item"><span>Double Cheese Melt</span><span>$11.49</span></div>
-    <div class="menu-item"><span>Crispy Chicken Sandwich</span><span>$7.99</span></div>
-    <div class="menu-item"><span>Loaded Fries</span><span>$5.49</span></div>
-    <div class="menu-item"><span>Chocolate Milkshake</span><span>$4.99</span></div>
-    <div class="menu-item"><span>Homemade Apple Pie</span><span>$4.49</span></div>
-  </section>
+<main>
+<section class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow">Freshly made • Comfort food</span>
+    <h2>Good food.<br><span>Great mood.</span></h2>
+    <p>Juicy burgers, crispy sides, creamy shakes and sweet treats — made for your next favourite meal.</p>
+    <a class="btn gold" href="#menu">Explore the menu →</a>
+    <a class="btn outline" href="#offers" style="margin-left:8px">Today's specials</a>
+  </div>
+</section>
 
-  <section id="about">
-    <h2>About Us</h2>
-    <p style="text-align:center; font-size:1.1em;">
-      Jeyyy's Diner started with one simple idea: serve honest, delicious food
-      that makes people smile. Every burger is made fresh, every shake is hand-spun,
-      and every guest leaves happy.
-    </p>
-  </section>
+<div class="feature-strip"><div class="container feature-grid">
+  <div>🍳 <strong>Made with care</strong><span>Comfort food favourites</span></div>
+  <div>🛍️ <strong>Easy ordering</strong><span>Pickup or delivery demo</span></div>
+  <div>💬 <strong>Friendly service</strong><span>Order through WhatsApp</span></div>
+</div></div>
 
-  <section id="contact">
-    <h2>Come Visit Us</h2>
-    <p style="text-align:center; font-size:1.1em;">
-      📍 123 Main Street<br>
-      🕒 Open daily: 10am – 10pm<br>
-      📞 (555) 123-DINER
-    </p>
-  </section>
+<section id="menu">
+  <div class="container">
+    <div class="section-head"><span class="eyebrow">Find your favourite</span><h2>Our Menu</h2><p>Choose something delicious. Prices are sample portfolio prices shown in both currencies.</p></div>
+    <div class="toolbar">
+      <div class="search-wrap"><input id="searchInput" type="search" placeholder="🔎 Search meals..." aria-label="Search menu"></div>
+      <select id="sortSelect" aria-label="Sort menu" style="max-width:210px"><option value="default">Featured first</option><option value="low">Price: low to high (₦)</option><option value="high">Price: high to low (₦)</option><option value="az">Name: A–Z</option></select>
+    </div>
+    <div class="filters" id="filters" style="margin-bottom:22px">
+      <button class="filter active" data-category="All">All items</button>
+      <button class="filter" data-category="Burgers">🍔 Burgers</button>
+      <button class="filter" data-category="Sides">🍟 Sides</button>
+      <button class="filter" data-category="Drinks">🥤 Drinks</button>
+      <button class="filter" data-category="Desserts">🍰 Desserts</button>
+      <button class="filter" data-category="Combos">⭐ Combos</button>
+    </div>
+    <div class="menu-grid" id="menuGrid" aria-live="polite"></div>
+  </div>
+</section>
 
-  <footer>
-    <p>© 2026 Jeyyy's Diner — Made with ❤️ and extra cheese</p>
-  </footer>
+<section id="offers" style="padding-top:0">
+ <div class="container promo">
+   <div><span class="eyebrow">A little extra goodness</span><h2>Combo time 🍔 + 🍟</h2><p>Try the Jeyyy's Combo: a classic burger, crispy fries and a drink.</p><p class="hint">Sample offer. Availability and prices are for demo purposes.</p></div>
+   <button class="btn gold" id="comboBtn">Add combo to cart</button>
+ </div>
+</section>
 
+<section id="gallery">
+  <div class="container">
+    <div class="section-head"><span class="eyebrow">A taste of the diner</span><h2>Food Gallery</h2><p>A few delicious-looking favourites to set the mood.</p></div>
+    <div class="gallery-grid">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1000&q=80" alt="Burger with fresh toppings">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=80" alt="Golden french fries">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=700&q=80" alt="Creamy milkshake">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=700&q=80" alt="Freshly baked pizza">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1562007908-17c67e878c3e?auto=format&fit=crop&w=700&q=80" alt="Sweet dessert">
+    </div>
+    <p class="demo-note">Food images are loaded from Unsplash and require an internet connection.</p>
+  </div>
+</section>
+
+<section id="about">
+ <div class="container about-grid">
+   <img loading="lazy" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=85" alt="Warm restaurant interior">
+   <div><span class="eyebrow">Our story</span><h2 style="font-size:2.2rem;color:var(--gold);margin:8px 0">Welcome to the family</h2>
+   <p>Jeyyy's Diner is a restaurant website concept built around one simple idea: good food should bring people together.</p>
+   <p>From juicy burgers to sweet treats, our sample menu celebrates diner favourites in a warm, modern setting.</p>
+   <div class="pill-list"><span class="pill">Made with care</span><span class="pill">Comfort food</span><span class="pill">Good vibes</span></div>
+   <p class="demo-note">This is a portfolio demo, not a verified operating restaurant.</p></div>
+ </div>
+</section>
+
+<section id="reviews">
+ <div class="container">
+  <div class="section-head"><span class="eyebrow">Kind words</span><h2>Customer Reviews</h2><p>Example reviews to demonstrate how testimonials could look on the finished site.</p></div>
+  <div class="review-grid">
+   <article class="review"><div class="stars">★★★★★</div><p>“The menu looks amazing and the ordering flow is easy to follow.”</p><small>— Demo reviewer</small></article>
+   <article class="review"><div class="stars">★★★★★</div><p>“Love the classic diner colours and the food gallery.”</p><small>— Demo reviewer</small></article>
+   <article class="review"><div class="stars">★★★★★</div><p>“A clean layout that looks great on my phone.”</p><small>— Demo reviewer</small></article>
+  </div>
+  <p class="demo-note">These are illustrative sample reviews, not verified customer testimonials.</p>
+  <div style="text-align:center;margin-top:18px"><button class="btn outline" id="reviewBtn">Try demo review form</button></div>
+ </div>
+</section>
+
+<section id="hours">
+ <div class="container">
+  <div class="section-head"><span class="eyebrow">Plan your visit</span><h2>Hours & Availability</h2><p>Sample schedule for the portfolio preview. Replace it with real business hours before launch.</p></div>
+  <div class="contact-card" style="max-width:600px;margin:auto">
+   <p>Monday – Friday <strong style="float:right;color:var(--gold)">10:00 AM – 10:00 PM</strong></p>
+   <hr style="border-color:var(--line);margin:10px 0">
+   <p>Saturday – Sunday <strong style="float:right;color:var(--gold)">10:00 AM – 11:00 PM</strong></p>
+   <p class="demo-note">Opening status is not live-connected. Please treat these hours as sample information.</p>
+  </div>
+ </div>
+</section>
+
+<section id="faq">
+ <div class="container">
+  <div class="section-head"><span class="eyebrow">Need to know?</span><h2>Frequently Asked Questions</h2></div>
+  <div class="faq-list">
+   <details><summary>How do I place an order?</summary><p>Add items to your cart, choose pickup or delivery, complete the demo checkout form, then send the order details to WhatsApp.</p></details>
+   <details><summary>Can I pay online?</summary><p>This demo does not collect payments. Any payment instructions are examples only. A real business would need a verified payment provider integration.</p></details>
+   <details><summary>Can I order for pickup?</summary><p>Yes. Select pickup in checkout. The address and hours currently shown are sample details.</p></details>
+   <details><summary>Are the prices real?</summary><p>No. Both naira and dollar prices are fixed sample portfolio prices and are not exchange-rate conversions.</p></details>
+   <details><summary>Can I manage the menu?</summary><p>The demo admin panel can edit items in this browser. A real shared admin panel requires a secure backend.</p></details>
+  </div>
+ </div>
+</section>
+
+<section id="contact">
+ <div class="container">
+  <div class="section-head"><span class="eyebrow">Say hello</span><h2>Contact Us</h2><p>Sample restaurant contact information is for the demo. For website enquiries, contact the developer below.</p></div>
+  <div class="contact-grid">
+   <div class="contact-card"><h3>🍽️ Restaurant information</h3><p>📍 123 Main Street <span class="hint">(sample address)</span></p><p>🕒 Daily hours shown above <span class="hint">(sample)</span></p><p>📞 WhatsApp: <a href="https://wa.me/2347035960615" target="_blank" rel="noopener">Chat with Jeyyy's Diner</a></p><p class="demo-note">Replace the address, phone and schedule with verified business details before launch.</p></div>
+   <div class="contact-card"><h3>💻 Contact the Website Developer</h3><p>Want a website for your own business? Get in touch about a custom design.</p><p>✉️ <a href="mailto:Houshouse070@gmail.com?subject=Website%20design%20enquiry">Houshouse070@gmail.com</a></p><p>💬 <a href="https://wa.me/2347035960615?text=Hello%2C%20I%20am%20interested%20in%20a%20website%20design." target="_blank" rel="noopener">WhatsApp the developer</a></p><p class="demo-note">This contact link opens your visitor's email app; it does not send an email automatically.</p></div>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer><div class="container">
+ <p>© <span id="year"></span> <strong>Jeyyy's Diner</strong> — Made with ❤️ and extra cheese.</p>
+ <p class="developer">Website by <a href="mailto:Houshouse070@gmail.com">Jeyyy · Contact the developer</a></p>
+ <p class="demo-note">Portfolio demo • Sample prices, reviews, address and business details • No live payment processing</p>
+ <p style="margin-top:12px"><button class="btn small outline" id="adminBtn">Open demo admin</button> <button class="btn small outline" id="ordersBtn">Demo order history</button></p>
+</div></footer>
+
+<!-- Cart -->
+<div class="modal-backdrop" id="cartModal" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+ <div class="modal"><div class="modal-head"><h2 id="cartTitle">Your Cart</h2><button class="close-btn" data-close="cartModal">✕ Close</button></div>
+ <div id="cartContents"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px"><button class="btn gold" id="checkoutBtn">Continue to checkout</button><button class="btn outline" data-close="cartModal">Keep browsing</button></div></div>
+</div>
+
+<!-- Checkout -->
+<div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+ <div class="modal"><div class="modal-head"><h2 id="checkoutTitle">Checkout</h2><button class="close-btn" data-close="checkoutModal">✕ Close</button></div>
+ <p class="hint">Demo checkout only. Do not enter sensitive information. No payment is collected.</p>
+ <form id="checkoutForm">
+  <div class="form-grid">
+   <div class="field"><label for="customerName">Name *</label><input id="customerName" required maxlength="80" autocomplete="name" placeholder="Your name"></div>
+   <div class="field"><label for="customerPhone">Phone *</label><input id="customerPhone" required maxlength="25" autocomplete="tel" placeholder="Your phone number"></div>
+   <div class="field"><label for="orderType">Order type *</label><select id="orderType"><option value="Delivery">Delivery</option><option value="Pickup">Pickup</option></select></div>
+   <div class="field"><label for="currencySelect">Display currency *</label><select id="currencySelect"><option value="NGN">Nigerian naira (₦)</option><option value="USD">US dollars ($)</option></select></div>
+   <div class="field full" id="addressField"><label for="customerAddress">Delivery address *</label><textarea id="customerAddress" rows="2" maxlength="250" placeholder="Sample only — don't enter a real address in this public demo"></textarea></div>
+   <div class="field full"><label for="orderNotes">Order notes (optional)</label><textarea id="orderNotes" rows="2" maxlength="250" placeholder="Any preferences?"></textarea></div>
+  </div>
+  <div class="notice">Payment: demo only. The next step creates a local sample order and opens WhatsApp with your order summary. Please review the message before sending.</div>
+  <div id="checkoutSummary"></div>
+  <button class="btn gold" type="submit" style="width:100%;margin-top:15px">Confirm demo order & open WhatsApp</button>
+ </form></div>
+</div>
+
+<!-- Generic demo form -->
+<div class="modal-backdrop" id="genericModal" role="dialog" aria-modal="true" aria-labelledby="genericTitle">
+ <div class="modal"><div class="modal-head"><h2 id="genericTitle">Demo</h2><button class="close-btn" data-close="genericModal">✕ Close</button></div><div id="genericBody"></div></div>
+</div>
+
+<!-- Admin -->
+<div class="modal-backdrop" id="adminModal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+ <div class="modal"><div class="modal-head"><h2 id="adminTitle">Demo Admin Panel</h2><button class="close-btn" data-close="adminModal">✕ Close</button></div>
+ <div class="notice">Demo-only admin. Changes are saved in this browser only and are not secure or shared with other visitors. Do not use real customer data.</div>
+ <div class="admin-tabs"><button class="active" data-admin-tab="items">Menu & prices</button><button data-admin-tab="orders">Order statuses</button><button data-admin-tab="availability">Availability</button></div>
+ <div id="adminBody"></div>
+ </div>
+</div>
+
+<!-- Orders -->
+<div class="modal-backdrop" id="ordersModal" role="dialog" aria-modal="true" aria-labelledby="ordersTitle">
+ <div class="modal"><div class="modal-head"><h2 id="ordersTitle">Demo Order History</h2><button class="close-btn" data-close="ordersModal">✕ Close</button></div><div id="ordersBody"></div></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+"use strict";
+const WHATSAPP = "2347035960615";
+const EMAIL = "Houshouse070@gmail.com";
+const STORAGE = {menu:"jeyyy_demo_menu_v1",cart:"jeyyy_demo_cart_v1",orders:"jeyyy_demo_orders_v1",account:"jeyyy_demo_account_v1",availability:"jeyyy_demo_availability_v1",reviews:"jeyyy_demo_reviews_v1"};
+const initialMenu = [
+{id:1,name:"Jeyyy's Classic Burger",category:"Burgers",naira:12000,dollar:8.99,desc:"Juicy burger, fresh lettuce, tomato and house sauce.",tag:"Bestseller",available:true,featured:1,img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80"},
+{id:2,name:"Double Cheese Melt",category:"Burgers",naira:15500,dollar:11.49,desc:"Double cheese, a rich flavour and a toasted bun.",tag:"Fan favourite",available:true,featured:2,img:"https://images.unsplash.com/photo-1553979459-d2229ba7433a?auto=format&fit=crop&w=800&q=80"},
+{id:3,name:"Crispy Chicken Sandwich",category:"Burgers",naira:10500,dollar:7.99,desc:"Crunchy chicken with crisp greens and creamy sauce.",tag:"Crispy",available:true,featured:3,img:"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=80"},
+{id:4,name:"Loaded Fries",category:"Sides",naira:7000,dollar:5.49,desc:"Golden fries with a delicious savoury topping.",tag:"",available:true,featured:4,img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80"},
+{id:5,name:"Chocolate Milkshake",category:"Drinks",naira:6500,dollar:4.99,desc:"A cool, creamy chocolate treat.",tag:"Cold favourite",available:true,featured:5,img:"https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80"},
+{id:6,name:"Homemade Apple Pie",category:"Desserts",naira:6000,dollar:4.49,desc:"A sweet dessert inspired by classic diner pies.",tag:"Sweet treat",available:true,featured:6,img:"https://images.unsplash.com/photo-1562007908-17c67e878c3e?auto=format&fit=crop&w=800&q=80"},
+{id:7,name:"Jeyyy's Combo",category:"Combos",naira:19000,dollar:13.99,desc:"Classic burger, crispy fries and a drink.",tag:"Combo deal",available:true,featured:0,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"}
+];
+const $ = id => document.getElementById(id);
+const safeRead = (key, fallback) => { try {const v=localStorage.getItem(key);return v?JSON.parse(v):fallback;}catch(e){return fallback;} };
+const safeWrite = (key,val) => {try{localStorage.setItem(key,JSON.stringify(val));return true;}catch(e){toast("Browser storage is unavailable. Changes may not persist.");return false;}};
+let menu = safeRead(STORAGE.menu, initialMenu);
+let cart = safeRead(STORAGE.cart, []);
+let orders = safeRead(STORAGE.orders, []);
+let activeCategory = "All";
+let adminTab = "items";
+let currentAccount = safeRead(STORAGE.account, null);
+let availability = safeRead(STORAGE.availability, true);
+const money = (item,currency="NGN") => currency==="USD" ? "$"+Number(item.dollar).toFixed(2) : "₦"+Number(item.naira).toLocaleString("en-NG");
+const escapeHTML = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("show"),2600);}
+function saveCart(){safeWrite(STORAGE.cart,cart);renderCartCount();}
+function getItem(id){return menu.find(m=>m.id===Number(id));}
+function renderMenu(){
+ const q=$("searchInput").value.trim().toLowerCase(),sort=$("sortSelect").value;
+ let list=menu.filter(m=>(activeCategory==="All"||m.category===activeCategory)&&(`${m.name} ${m.category} ${m.desc}`.toLowerCase().includes(q)));
+ if(sort==="low")list.sort((a,b)=>a.naira-b.naira);if(sort==="high")list.sort((a,b)=>b.naira-a.naira);if(sort==="az")list.sort((a,b)=>a.name.localeCompare(b.name));if(sort==="default")list.sort((a,b)=>a.featured-b.featured);
+ $("menuGrid").innerHTML=list.length?list.map(m=>`<article class="food-card">
+ <div class="food-img-wrap"><img loading="lazy" src="${escapeHTML(m.img)}" alt="${escapeHTML(m.name)}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=75'">${m.tag?`<span class="tag">${escapeHTML(m.tag)}</span>`:""}</div>
+ <div class="food-info"><h3>${escapeHTML(m.name)}</h3><p>${escapeHTML(m.desc)}</p><div class="prices"><strong>${money(m,"NGN")}</strong><span>${money(m,"USD")}</span></div>
+ <div class="card-bottom">${m.available&&availability?`<button class="btn small" data-add="${m.id}">Add to cart +</button>`:`<button class="btn small" disabled style="opacity:.55">Unavailable</button>`}<button class="btn small outline" data-details="${m.id}" aria-label="View ${escapeHTML(m.name)}">Details</button></div></div></article>`).join(""):`<div class="empty-state">No menu items found. Try another search or category.</div>`;
+ document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.dataset.category===activeCategory));
+}
+function renderCartCount(){$("cartCount").textContent=cart.reduce((n,x)=>n+x.qty,0);}
+function cartTotals(currency="NGN"){return cart.reduce((sum,x)=>{const m=getItem(x.id);return sum+(m?(currency==="USD"?m.dollar:m.naira)*x.qty:0)},0);}
+function addToCart(id){
+ const m=getItem(id);if(!m||!m.available||!availability){toast("This item is currently unavailable.");return;}
+ const row=cart.find(x=>x.id===m.id);if(row)row.qty=Math.min(99,row.qty+1);else cart.push({id:m.id,qty:1});saveCart();toast(m.name+" added to cart.");
+}
+function changeQty(id,delta){const row=cart.find(x=>x.id===Number(id));if(!row)return;row.qty+=delta;if(row.qty<=0)cart=cart.filter(x=>x.id!==Number(id));if(row.qty>99)row.qty=99;saveCart();renderCart();}
+function renderCart(){
+ cart=cart.filter(x=>getItem(x.id));const box=$("cartContents");
+ if(!cart.length){box.innerHTML='<p class="empty-state">Your cart is empty. Add a delicious item from the menu!</p><div class="total-line"><span>Total</span><strong>₦0 / $0.00</strong></div>';$("checkoutBtn").disabled=true;return;}
+ $("checkoutBtn").disabled=false;
+ box.innerHTML='<div class="cart-list">'+cart.map(x=>{const m=getItem(x.id);return `<div class="cart-row"><div><strong>${escapeHTML(m.name)}</strong><p>${money(m)} · ${money(m,"USD")} each</p><div class="qty"><button data-qty="${m.id}" data-delta="-1" aria-label="Decrease quantity">−</button><span>${x.qty}</span><button data-qty="${m.id}" data-delta="1" aria-label="Increase quantity">+</button><button class="remove" data-remove="${m.id}">Remove</button></div></div><strong style="color:var(--gold)">${money({naira:m.naira*x.qty,dollar:m.dollar*x.qty})}<br><span style="font-size:.85rem;color:#d5c7b9">${money({naira:m.naira*x.qty,dollar:m.dollar*x.qty},"USD")}</span></strong></div>`}).join("")+'</div>'+
+ `<div class="total-line"><span>Estimated total</span><strong>₦${cartTotals("NGN").toLocaleString("en-NG")} / $${cartTotals("USD").toFixed(2)}</strong></div><p class="hint">Demo totals only. Delivery fees, taxes and payments are not connected.</p>`;
+}
+function openModal(id){$(id).classList.add("open");document.body.style.overflow="hidden";}
+function closeModal(id){$(id).classList.remove("open");if(!document.querySelector(".modal-backdrop.open"))document.body.style.overflow="";}
+function checkoutSummary(){const cur=$("currencySelect").value;return `<div class="total-line"><span>Order total (${cur==="USD"?"USD":"NGN"})</span><strong>${cur==="USD"?"$"+cartTotals("USD").toFixed(2):"₦"+cartTotals("NGN").toLocaleString("en-NG")}</strong></div><p class="hint">Other currency reference: ${cur==="USD"?"₦"+cartTotals("NGN").toLocaleString("en-NG"):"$"+cartTotals("USD").toFixed(2)}</p>`;}
+function openCheckout(){if(!cart.length){toast("Add something to your cart first.");return;}closeModal("cartModal");$("checkoutSummary").innerHTML=checkoutSummary();toggleAddress();openModal("checkoutModal");}
+function toggleAddress(){$("addressField").classList.toggle("hidden",$("orderType").value==="Pickup");$("customerAddress").required=$("orderType").value==="Delivery";}
+function orderText(order){return `Hello Jeyyy's Diner! I'd like to place this demo order:\nOrder ID: ${order.id}\nName: ${order.name}\nPhone: ${order.phone}\nType: ${order.type}\n${order.type==="Delivery"?"Address: "+order.address+"\n":""}Items:\n${order.items.map(x=>`• ${x.name} × ${x.qty}`).join("\n")}\nTotal: ${order.currency==="USD"?"$"+order.totalUSD.toFixed(2):"₦"+order.totalNGN.toLocaleString("en-NG")}\nOther currency reference: ${order.currency==="USD"?"₦"+order.totalNGN.toLocaleString("en-NG"):"$"+order.totalUSD.toFixed(2)}\nNotes: ${order.notes||"None"}\nThis order was created from a portfolio demo. Please confirm details and availability.`;
+}
+$("checkoutForm").addEventListener("submit",e=>{
+ e.preventDefault();if(!cart.length){toast("Your cart is empty.");closeModal("checkoutModal");return;}
+ const type=$("orderType").value,address=$("customerAddress").value.trim();
+ if(type==="Delivery"&&!address){toast("Enter a delivery address or choose pickup.");return;}
+ const currency=$("currencySelect").value;
+ const order={id:"JD"+Date.now().toString().slice(-8),name:$("customerName").value.trim(),phone:$("customerPhone").value.trim(),type,address,notes:$("orderNotes").value.trim(),currency,totalNGN:cartTotals("NGN"),totalUSD:cartTotals("USD"),items:cart.map(x=>({name:getItem(x.id).name,qty:x.qty})),status:"Awaiting WhatsApp confirmation",created:new Date().toLocaleString()};
+ orders.unshift(order);safeWrite(STORAGE.orders,orders.slice(0,30));
+ const textMsg=orderText(order);cart=[];saveCart();renderCart();closeModal("checkoutModal");toast("Demo order saved in this browser.");
+ showOrderConfirmation(order);
+ window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(textMsg),"_blank","noopener");
+});
+function showOrderConfirmation(o){
+ $("genericTitle").textContent="Order created: "+o.id;
+ $("genericBody").innerHTML=`<div class="notice">Your sample order has been saved in this browser. WhatsApp should open in a new tab so you can review and send the order message.</div><div class="status-list"><div class="status-item"><strong>Order status</strong><p>${escapeHTML(o.status)}</p></div><div class="status-item"><strong>Total</strong><p>₦${o.totalNGN.toLocaleString("en-NG")} / $${o.totalUSD.toFixed(2)}</p></div></div><p class="hint" style="margin:12px 0">This does not mean the restaurant received or accepted the order.</p><button class="btn gold" id="confirmationHistory">View demo order history</button>`;
+ openModal("genericModal");$("confirmationHistory").onclick=()=>{closeModal("genericModal");renderOrders();openModal("ordersModal");};
+}
+function renderOrders(){
+ const box=$("ordersBody");
+ if(!orders.length){box.innerHTML='<p class="empty-state">No demo orders in this browser yet.</p>';return;}
+ box.innerHTML='<div class="status-list">'+orders.map(o=>`<div class="status-item"><strong>${escapeHTML(o.id)} · ${escapeHTML(o.status)}</strong><p>${escapeHTML(o.created)} · ${escapeHTML(o.type)} · ${escapeHTML(o.name)}</p><p>${o.items.map(i=>escapeHTML(i.name)+" × "+i.qty).join(", ")}</p><p>₦${o.totalNGN.toLocaleString("en-NG")} / $${o.totalUSD.toFixed(2)}</p><label class="hint" for="status-${o.id}">Update demo status</label><select id="status-${o.id}" data-status="${escapeHTML(o.id)}"><option ${o.status==="Awaiting WhatsApp confirmation"?"selected":""}>Awaiting WhatsApp confirmation</option><option ${o.status==="Received (demo)"?"selected":""}>Received (demo)</option><option ${o.status==="Preparing (demo)"?"selected":""}>Preparing (demo)</option><option ${o.status==="Ready for pickup (demo)"?"selected":""}>Ready for pickup (demo)</option><option ${o.status==="Completed (demo)"?"selected":""}>Completed (demo)</option><option ${o.status==="Cancelled (demo)"?"selected":""}>Cancelled (demo)</option></select></div>`).join("")+'</div><button class="btn outline small" id="clearOrders" style="margin-top:14px">Clear demo order history</button><p class="hint" style="margin-top:8px">Stored in this browser only, not a shared order system.</p>';
+}
+function openAdmin(tab="items"){adminTab=tab;renderAdmin();openModal("adminModal");}
+function renderAdmin(){
+ document.querySelectorAll("[data-admin-tab]").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===adminTab));
+ const box=$("adminBody");
+ if(adminTab==="items"){
+ box.innerHTML=`<p class="hint" style="margin-bottom:12px">Edit sample menu details. Prices are independent fixed amounts, not conversions.</p><div class="field"><label for="newName">New item name</label><input id="newName" placeholder="e.g. Spicy chicken burger"></div><div class="form-grid"><div class="field"><label for="newCategory">Category</label><select id="newCategory"><option>Burgers</option><option>Sides</option><option>Drinks</option><option>Desserts</option><option>Combos</option></select></div><div class="field"><label for="newNaira">Price in naira</label><input id="newNaira" type="number" min="0" placeholder="12000"></div><div class="field"><label for="newDollar">Price in dollars</label><input id="newDollar" type="number" min="0" step=".01" placeholder="8.99"></div><div class="field"><label for="newImage">Image URL</label><input id="newImage" type="url" placeholder="https://..."></div></div><div class="field"><label for="newDesc">Description</label><input id="newDesc" placeholder="Short description"></div><button class="btn gold" id="addMenuItem">Add menu item</button><hr style="border-color:var(--line);margin:20px 0"><div>${menu.map(m=>`<div class="admin-item"><div><strong>${escapeHTML(m.name)}</strong><p>₦${m.naira.toLocaleString("en-NG")} / $${Number(m.dollar).toFixed(2)} · ${escapeHTML(m.category)} · ${m.available?"Available":"Unavailable"}</p></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn small outline" data-edit-item="${m.id}">Edit</button><button class="btn small outline" data-toggle-item="${m.id}">${m.available?"Hide":"Show"}</button><button class="btn small" data-delete-item="${m.id}">Delete</button></div></div>`).join("")}</div><button class="btn outline small" id="resetMenu" style="margin-top:15px">Reset sample menu</button>`;
+ }else if(adminTab==="orders"){
+ box.innerHTML='<p class="hint">Change statuses for demo orders stored in this browser.</p><button class="btn gold" id="adminViewOrders" style="margin-top:12px">Open order history</button>';
+ }else{
+ box.innerHTML=`<div class="notice">This only controls the demo site's local availability display.</div><p style="margin-bottom:14px">Ordering is currently <strong style="color:var(--gold)">${availability?"enabled":"paused"}</strong>.</p><button class="btn gold" id="toggleAvailability">${availability?"Pause demo ordering":"Enable demo ordering"}</button>`;
+ }
+}
+function persistMenu(){safeWrite(STORAGE.menu,menu);renderMenu();renderAdmin();}
+$("menuGrid").addEventListener("click",e=>{
+ const add=e.target.closest("[data-add]"),details=e.target.closest("[data-details]");
+ if(add)addToCart(add.dataset.add);
+ if(details){const m=getItem(details.dataset.details);if(!m)return;$("genericTitle").textContent=m.name;$("genericBody").innerHTML=`<img src="${escapeHTML(m.img)}" alt="${escapeHTML(m.name)}" style="width:100%;height:230px;object-fit:cover;border-radius:9px" onerror="this.style.display='none'"><p style="margin:12px 0;color:var(--muted)">${escapeHTML(m.desc)}</p><p style="color:var(--gold);font-weight:bold">₦${m.naira.toLocaleString("en-NG")} / $${m.dollar.toFixed(2)}</p><button class="btn gold" id="detailAdd" style="margin-top:12px" ${m.available&&availability?"":"disabled"}>Add to cart</button>`;openModal("genericModal");$("detailAdd").onclick=()=>{addToCart(m.id);closeModal("genericModal");};}
+});
+$("filters").addEventListener("click",e=>{const b=e.target.closest("[data-category]");if(b){activeCategory=b.dataset.category;renderMenu();}});
+$("searchInput").addEventListener("input",renderMenu);$("sortSelect").addEventListener("change",renderMenu);
+$("cartBtn").onclick=()=>{renderCart();openModal("cartModal");};
+$("cartContents").addEventListener("click",e=>{const q=e.target.closest("[data-qty]"),r=e.target.closest("[data-remove]");if(q)changeQty(q.dataset.qty,Number(q.dataset.delta));if(r){cart=cart.filter(x=>x.id!==Number(r.dataset.remove));saveCart();renderCart();}});
+$("checkoutBtn").onclick=openCheckout;$("currencySelect").addEventListener("change",()=>$("checkoutSummary").innerHTML=checkoutSummary());$("orderType").addEventListener("change",toggleAddress);
+$("comboBtn").onclick=()=>{const combo=menu.find(m=>m.category==="Combos");if(combo)addToCart(combo.id);};
+document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",()=>closeModal(b.dataset.close)));
+document.querySelectorAll(".modal-backdrop").forEach(b=>b.addEventListener("click",e=>{if(e.target===b)closeModal(b.id);}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".modal-backdrop.open").forEach(m=>closeModal(m.id));});
+$("menuToggle").onclick=()=>{const open=$("navlinks").classList.toggle("open");$("menuToggle").setAttribute("aria-expanded",String(open));};
+$("navlinks").addEventListener("click",e=>{if(e.target.closest("a")){$("navlinks").classList.remove("open");$("menuToggle").setAttribute("aria-expanded","false");}});
+$("accountBtn").onclick=()=>{
+ $("genericTitle").textContent="Customer Account (Demo)";
+ $("genericBody").innerHTML=`<div class="notice">Demo account only. No password or sensitive information is needed. This profile is saved only in this browser.</div><form id="accountForm"><div class="field"><label for="demoAccountName">Display name</label><input id="demoAccountName" maxlength="60" required value="${escapeHTML(currentAccount?.name||"")}" placeholder="Choose a display name"></div><button class="btn gold" type="submit">Save demo profile</button> <button class="btn outline" type="button" id="accountHistory">My demo orders</button><button class="btn outline" type="button" id="clearAccount" style="margin-top:8px">Clear profile</button></form>`;
+ openModal("genericModal");
+ $("accountForm").onsubmit=e=>{e.preventDefault();currentAccount={name:$("demoAccountName").value.trim()};safeWrite(STORAGE.account,currentAccount);$("accountBtn").textContent="👤 "+currentAccount.name;toast("Demo profile saved.");closeModal("genericModal");};
+ $("accountHistory").onclick=()=>{closeModal("genericModal");renderOrders();openModal("ordersModal");};
+ $("clearAccount").onclick=()=>{currentAccount=null;try{localStorage.removeItem(STORAGE.account)}catch(e){}$("accountBtn").textContent="👤 Demo account";toast("Demo profile cleared.");closeModal("genericModal");};
+};
+$("adminBtn").onclick=()=>openAdmin();$("adminBody").addEventListener("click",e=>{
+ const tab=e.target.closest("[data-admin-tab]");if(tab){adminTab=tab.dataset.adminTab;renderAdmin();return;}
+ const edit=e.target.closest("[data-edit-item]"),toggle=e.target.closest("[data-toggle-item]"),del=e.target.closest("[data-delete-item]");
+ if(edit){const m=getItem(edit.dataset.editItem);if(!m)return;$("genericTitle").textContent="Edit "+m.name;$("genericBody").innerHTML=`<form id="editItemForm"><div class="field"><label>Name</label><input id="editName" required value="${escapeHTML(m.name)}"></div><div class="form-grid"><div class="field"><label>Naira price</label><input id="editNaira" type="number" min="0" required value="${m.naira}"></div><div class="field"><label>Dollar price</label><input id="editDollar" type="number" min="0" step=".01" required value="${m.dollar}"></div></div><div class="field"><label>Description</label><input id="editDesc" value="${escapeHTML(m.desc)}"></div><div class="field"><label>Image URL</label><input id="editImg" type="url" value="${escapeHTML(m.img)}"></div><button class="btn gold">Save demo item</button></form>`;openModal("genericModal");$("editItemForm").onsubmit=ev=>{ev.preventDefault();m.name=$("editName").value.trim();m.naira=Number($("editNaira").value);m.dollar=Number($("editDollar").value);m.desc=$("editDesc").value.trim();m.img=$("editImg").value.trim()||m.img;persistMenu();closeModal("genericModal");toast("Demo item updated.");};}
+ if(toggle){const m=getItem(toggle.dataset.toggleItem);if(m){m.available=!m.available;persistMenu();toast("Item availability updated.");}}
+ if(del){menu=menu.filter(m=>m.id!==Number(del.dataset.deleteItem));cart=cart.filter(x=>x.id!==Number(del.dataset.deleteItem));saveCart();persistMenu();toast("Demo item deleted.");}
+ if(e.target.id==="addMenuItem"){const name=$("newName").value.trim(),naira=Number($("newNaira").value),dollar=Number($("newDollar").value);if(!name||!Number.isFinite(naira)||!Number.isFinite(dollar)||naira<0||dollar<0){toast("Enter a name and valid prices.");return;}menu.push({id:Math.max(0,...menu.map(m=>m.id))+1,name,category:$("newCategory").value,naira,dollar,desc:$("newDesc").value.trim(),tag:"New",available:true,featured:menu.length,img:$("newImage").value.trim()||initialMenu[0].img});persistMenu();toast("Demo menu item added.");}
+ if(e.target.id==="resetMenu"){if(confirm("Reset the menu to the original sample items?")){menu=initialMenu.map(x=>({...x}));persistMenu();toast("Sample menu reset.");}}
+ if(e.target.id==="adminViewOrders"){closeModal("adminModal");renderOrders();openModal("ordersModal");}
+ if(e.target.id==="toggleAvailability"){availability=!availability;safeWrite(STORAGE.availability,availability);renderAdmin();renderMenu();toast(availability?"Demo ordering enabled.":"Demo ordering paused.");}
+});
+$("ordersBtn").onclick=()=>{renderOrders();openModal("ordersModal");};
+$("ordersBody").addEventListener("change",e=>{if(e.target.matches("[data-status]")){const o=orders.find(x=>x.id===e.target.dataset.status);if(o){o.status=e.target.value;safeWrite(STORAGE.orders,orders);toast("Demo status updated.");}}});
+$("ordersBody").addEventListener("click",e=>{if(e.target.id==="clearOrders"&&confirm("Clear all demo order history from this browser?")){orders=[];safeWrite(STORAGE.orders,orders);renderOrders();toast("Demo order history cleared.");}});
+$("reviewBtn").onclick=()=>{$("genericTitle").textContent="Add a Demo Review";$("genericBody").innerHTML=`<div class="notice">Reviews submitted here are only a local demonstration and won't be published to other visitors.</div><form id="reviewForm"><div class="field"><label for="reviewName">Display name</label><input id="reviewName" required maxlength="50"></div><div class="field"><label for="reviewRating">Rating</label><select id="reviewRating"><option value="5">★★★★★ — 5</option><option value="4">★★★★ — 4</option><option value="3">★★★ — 3</option><option value="2">★★ — 2</option><option value="1">★ — 1</option></select></div><div class="field"><label for="reviewText">Review</label><textarea id="reviewText" required maxlength="300" rows="3"></textarea></div><button class="btn gold">Save demo review</button></form><div id="savedReviews" style="margin-top:12px"></div>`;const reviews=safeRead(STORAGE.reviews,[]);$("savedReviews").innerHTML=reviews.map(r=>`<div class="review" style="margin:8px 0"><span class="stars">${"★".repeat(r.rating)}</span><p>${escapeHTML(r.text)}</p><small>${escapeHTML(r.name)} · demo</small></div>`).join("");openModal("genericModal");$("reviewForm").onsubmit=e=>{e.preventDefault();reviews.unshift({name:$("reviewName").value.trim(),rating:Number($("reviewRating").value),text:$("reviewText").value.trim()});safeWrite(STORAGE.reviews,reviews.slice(0,10));toast("Demo review saved in this browser.");closeModal("genericModal");};};
+$("year").textContent=new Date().getFullYear();
+if(currentAccount)$("accountBtn").textContent="👤 "+currentAccount.name;
+renderMenu();renderCartCount();renderCart();
+})();
+</script>
 </body>
 </html>
