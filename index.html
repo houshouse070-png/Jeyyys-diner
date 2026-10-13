@@ -1,1 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeyyy's Diner</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: #1a1a1a; color: #f5f0e8; }
+    header {
+      background: #b3122e;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    header h1 { font-size: 3em; letter-spacing: 2px; }
+    header p { font-size: 1.2em; margin-top: 10px; font-style: italic; }
+    nav {
+      background: #8c0e23;
+      text-align: center;
+      padding: 15px;
+    }
+    nav a { color: #f5f0e8; text-decoration: none; margin: 0 20px; font-size: 1.1em; }
+    nav a:hover { color: #ffd166; }
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: #242424;
+    }
+    .hero h2 { font-size: 2.5em; margin-bottom: 15px; color: #ffd166; }
+    .hero p { font-size: 1.2em; max-width: 600px; margin: 0 auto 30px; }
+    .btn {
+      display: inline-block;
+      background: #b3122e;
+      color: #fff;
+      padding: 14px 35px;
+      text-decoration: none;
+      font-size: 1.1em;
+      border-radius: 5px;
+    }
+    .btn:hover { background: #ffd166; color: #1a1a1a; }
+    section { padding: 60px 20px; max-width: 900px; margin: 0 auto; }
+    section h2 { color: #ffd166; font-size: 2em; margin-bottom: 25px; text-align: center; }
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 0;
+      border-bottom: 1px dashed #555;
+      font-size: 1.1em;
+    }
+    .menu-item span:last-child { color: #ffd166; }
+    footer {
+      background: #b3122e;
+      text-align: center;
+      padding: 25px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
 
+  <header>
+    <h1>🍔 Jeyyy's Diner</h1>
+    <p>Good food. Good mood. Since day one.</p>
+  </header>
+
+  <nav>
+    <a href="#menu">Menu</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="hero">
+    <h2>Welcome to Jeyyy's Diner!</h2>
+    <p>Home of the juiciest burgers, crispy fries, and the best milkshakes in town. Pull up a seat — you're family here.</p>
+    <a href="#menu" class="btn">See Our Menu</a>
+  </div>
+
+  <section id="menu">
+    <h2>Our Menu</h2>
+    <div class="menu-item"><span>Jeyyy's Classic Burger</span><span>$8.99</span></div>
+    <div class="menu-item"><span>Double Cheese Melt</span><span>$11.49</span></div>
+    <div class="menu-item"><span>Crispy Chicken Sandwich</span><span>$7.99</span></div>
+    <div class="menu-item"><span>Loaded Fries</span><span>$5.49</span></div>
+    <div class="menu-item"><span>Chocolate Milkshake</span><span>$4.99</span></div>
+    <div class="menu-item"><span>Homemade Apple Pie</span><span>$4.49</span></div>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p style="text-align:center; font-size:1.1em;">
+      Jeyyy's Diner started with one simple idea: serve honest, delicious food
+      that makes people smile. Every burger is made fresh, every shake is hand-spun,
+      and every guest leaves happy.
+    </p>
+  </section>
+
+  <section id="contact">
+    <h2>Come Visit Us</h2>
+    <p style="text-align:center; font-size:1.1em;">
+      📍 123 Main Street<br>
+      🕒 Open daily: 10am – 10pm<br>
+      📞 (555) 123-DINER
+    </p>
+  </section>
+
+  <footer>
+    <p>© 2026 Jeyyy's Diner — Made with ❤️ and extra cheese</p>
+  </footer>
+
+</body>
+</html>
